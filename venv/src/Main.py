@@ -7,7 +7,7 @@ from Filter import Filter
 
 def get_links(i):
     sett = set()
-    with open('links.csv') as file:
+    with open('linksForStartup.csv') as file:
             url = file.read().split('\n')[i]
             source = "https://pl.wikipedia.org/" + url
             data = requests.get(source).text
@@ -23,7 +23,7 @@ def get_links(i):
 
 def get_articles(i):
     with open('Articles/article%i.txt' % i, 'w') as article:
-        with open('links1.csv') as file:
+        with open('linksFetched.csv') as file:
             url = file.read().split('\n')[i]
             source = "https://pl.wikipedia.org/" + url
             data = requests.get(source).text
@@ -83,13 +83,13 @@ def generate_article_csvs():
                             dicOccur.update({word: wordcount})
         article.close()
     '''
-    with open('occurance.csv', 'a') as occur:
+    with open('wordFirstOccurance.csv', 'a') as occur:
         for key in dicOccur:
             print(key)
 
             occur.write(str(key) + ',' + str(dicOccur[key]) + ',\n')
 
-    with open('quantity.csv', 'a') as quantity:
+    with open('wordQuantity.csv', 'a') as quantity:
         dicQuan = sorted(dicQuan.items(), key=operator.itemgetter(1))
         print(dicQuan)
         for i in range(len(dicQuan)):
@@ -118,21 +118,21 @@ def main():
     #wez dane z artykulow
     sett = set()
     sett_temp =set()
-    num_lines = sum(1 for line in open('links1.csv'))
+    num_lines = sum(1 for line in open('linksFetched.csv'))
     for i in range(num_lines):
         get_articles(i)
     """
     '''
     #wez linki i wciep do seta, a z seta do pliku
         sett_temp = get_links(i)
-        with open('links1.csv', 'a') as file:
+        with open('linksFetched.csv', 'a') as file:
             writer = csv.writer(file, delimiter=' ')
             for link in sett_temp:
                 print(link)
                 writer.writerow([link])
     #double check unikalnosci
     sett2 = set()
-    with open('links.csv') as file:
+    with open('linksForStartup.csv') as file:
         reader = csv.reader(file)
         for list in reader:
             for line in list:
@@ -143,7 +143,7 @@ def main():
     #generate_dictionary()
     listaO = list()
     listaQ = list()
-    with open("occurance.csv") as occur:
+    with open("wordFirstOccurance.csv") as occur:
         reader = csv.reader(occur)
         for lista in reader:
             for line in lista:
@@ -153,7 +153,7 @@ def main():
                     listaO.append(int(linee[1]))
                 #print(line[1])
 
-    with open("quantity.csv") as quant:
+    with open("wordQuantity.csv") as quant:
         reader = csv.reader(quant)
         for lista in reader:
             for line in lista:
