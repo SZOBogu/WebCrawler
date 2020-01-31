@@ -4,6 +4,12 @@ from bs4 import BeautifulSoup
 from Filter import Filter
 
 class LinkFetcher:
+    def file_len(self):
+        with open('linksFetched.csv') as f:
+            for i, l in enumerate(f):
+                pass
+        return i + 1
+
     def get_links(self, i):
         sett = set()
         with open('linksForStartup.csv') as file:
