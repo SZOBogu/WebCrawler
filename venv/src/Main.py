@@ -1,101 +1,5 @@
-from bs4 import BeautifulSoup
-import requests
-import re
 import csv
-from Filter import Filter
 
-
-def get_links(i):
-    sett = set()
-    with open('linksForStartup.csv') as file:
-            url = file.read().split('\n')[i]
-            source = "https://pl.wikipedia.org/" + url
-            data = requests.get(source).text
-            soup = BeautifulSoup(data, 'lxml')
-            for line in soup.find_all('p'):
-                link = line.get_text()
-                link = re.sub('\W+', ' ', link)
-                link = link.lower()
-
-            filter = Filter()
-            sett = filter.filter(soup.find_all('a'))
-    return sett
-
-def get_articles(i):
-    with open('Articles/article%i.txt' % i, 'w') as article:
-        with open('linksFetched.csv') as file:
-            url = file.read().split('\n')[i]
-            source = "https://pl.wikipedia.org/" + url
-            data = requests.get(source).text
-            soup = BeautifulSoup(data, 'lxml')
-            writer = csv.writer(article)
-            for line in soup.find_all('p'):
-                link = line.get_text()
-                link = re.sub('\W+', ' ', link)
-                link = link.strip('"')
-                link = link.lower()
-                print(link)
-                writer.writerow([link])
-
-def generate_csv(i, word_count):
-    sett = set()
-    with open('Articles/article%i.txt' % i, 'r') as article:
-        reader = csv.reader(article)
-        with open('CSV%i.csv' % i, 'a') as file:
-            writer = csv.writer(file)
-            for list in reader:
-                for word in list:
-                    sett.add(word)
-                    """TODO: sprawdz czy set w przypadku nie dodania cos zwraca
-                    jesli tak:
-                        if none: szukaj slowa i dodaj jeden do counta
-                                zapisz pierwsze wystapienie slowa + word_count
-                                sprawdz reg expem albo metoda listy ile razy slowo wystepuje
-                                zapisz do csvki
-                    """
-
-            #writer.writerow(word, first, count)
-def megre_csvs():
-    """
-        TODO: sklej csvki
-        sprawdz czy dane slowo jest juz w poprzedniej csvce, jesli tak to dodaj count, jak nie to dodaj na koniec pliku, merguj do jednego pliku
-    :return:
-    """
-
-def generate_article_csvs():
-    dicQuan = dict()
-    dicOccur = dict()
-    wordcount = 0
-    for i in range(10166):
-        with open('Articles/article%i.txt' % i, 'r') as article:
-            art = csv.reader(article)
-            for paragraph in art:
-                for line in paragraph:
-                    line = line.split(' ')
-                    for word in line:
-                        wordcount += 1
-                        if word in dicQuan and word in dicOccur:
-                            #my_dict[key] = my_dict.get(key, 0) + num
-                            dicQuan[word] = dicQuan.get(word, 0) + 1
-                            #dic[word][1] = dic[word][1] + 1
-                        else:
-                            dicQuan.update({word: 1})
-                            dicOccur.update({word: wordcount})
-        article.close()
-    '''
-    with open('wordFirstOccurance.csv', 'a') as occur:
-        for key in dicOccur:
-            print(key)
-
-            occur.write(str(key) + ',' + str(dicOccur[key]) + ',\n')
-
-    with open('wordQuantity.csv', 'a') as quantity:
-        dicQuan = sorted(dicQuan.items(), key=operator.itemgetter(1))
-        print(dicQuan)
-        for i in range(len(dicQuan)):
-            quantity.write(str(dicQuan[i][0]) + ',' + str(dicQuan[i][1]) + ',\n')
-        quantity.close()
-    '''
 def generate_dictionary():
     wordList = set()
     for i in range(10166):
@@ -112,6 +16,7 @@ def generate_dictionary():
         for word in wordList:
             dic.write(word + '\n')
     dic.close()
+
 def main():
     #TODO: kontrola wielkości plików
     """

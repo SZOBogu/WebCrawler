@@ -1,21 +1,21 @@
+import csv
 import re
 import requests
 from bs4 import BeautifulSoup
-from Filter import Filter
 
-class LinkFetcher:
-    def get_links(self, i):
-        sett = set()
-        with open('linksForStartup.csv') as file:
+class ArticleFetcher:
+    def get_articles(self, i):
+        with open('Articles/article%i.txt' % i, 'w') as article:
+            with open('linksFetched.csv') as file:
                 url = file.read().split('\n')[i]
                 source = "https://pl.wikipedia.org/" + url
                 data = requests.get(source).text
                 soup = BeautifulSoup(data, 'lxml')
+                writer = csv.writer(article)
                 for line in soup.find_all('p'):
                     link = line.get_text()
                     link = re.sub('\W+', ' ', link)
+                    link = link.strip('"')
                     link = link.lower()
-
-                filter = Filter()
-                sett = filter.filter(soup.find_all('a'))
-        return sett
+                    print(link)
+                    writer.writerow([link])
