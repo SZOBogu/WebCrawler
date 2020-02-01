@@ -4,15 +4,15 @@ from bs4 import BeautifulSoup
 from Filter import Filter
 
 class LinkFetcher:
-    def file_len(self):
-        with open('linksFetched.csv') as f:
+    def linkCount(self, linksFilePath):
+        with open(linksFilePath) as f:
             for i, l in enumerate(f):
                 pass
         return i + 1
 
-    def get_links(self, i):
+    def getLinks(self, linksFilePath, i):
         sett = set()
-        with open('linksForStartup.csv') as file:
+        with open(linksFilePath) as file:
                 url = file.read().split('\n')[i]
                 source = "https://pl.wikipedia.org/" + url
                 data = requests.get(source).text
@@ -24,4 +24,5 @@ class LinkFetcher:
 
                 filter = Filter()
                 sett = filter.filter(soup.find_all('a'))
+                return sett
         return sett
