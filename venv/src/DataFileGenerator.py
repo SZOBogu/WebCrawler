@@ -2,6 +2,9 @@ import operator
 import csv
 
 class DataFileGenerator:
+    def __init__(self):
+        pass
+
     def generate_article_csvs(self):
         dicQuan = dict()
         dicOccur = dict()

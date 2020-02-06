@@ -1,5 +1,10 @@
 import csv
 
+import ArticleFetcher
+import DataFileGenerator
+import LinkFetcher
+
+
 def generate_dictionary():
     wordList = set()
     for i in range(10166):
@@ -19,17 +24,20 @@ def generate_dictionary():
 
 def main():
     #TODO: kontrola wielkości plików
-    """
+
     #wez dane z artykulow
     sett = set()
     sett_temp =set()
+    artFetcher = ArticleFetcher.ArticleFetcher()
+    linkFetcher = LinkFetcher.LinkFetcher()
+    dataFileGen = DataFileGenerator.DataFileGenerator()
+
     num_lines = sum(1 for line in open('linksFetched.csv'))
     for i in range(num_lines):
-        get_articles(i)
-    """
-    '''
+        artFetcher.get_article('linksFetched.csv', "Articles/article", i)
+
     #wez linki i wciep do seta, a z seta do pliku
-        sett_temp = get_links(i)
+        sett_temp = linkFetcher.get_links(i)
         with open('linksFetched.csv', 'a') as file:
             writer = csv.writer(file, delimiter=' ')
             for link in sett_temp:
@@ -43,11 +51,12 @@ def main():
             for line in list:
                 print(line)
                 sett2.add(line)
-'''
-    #generate_article_csvs()
-    #generate_dictionary()
-    listaO = list()
-    listaQ = list()
+
+    dataFileGen.generate_article_csvs()
+    dataFileGen.generate_dictionary()
+
+    listaOcc = list()
+    listaQuan = list()
     with open("wordFirstOccurance.csv") as occur:
         reader = csv.reader(occur)
         for lista in reader:
@@ -55,7 +64,7 @@ def main():
                 lines = occur.readlines()
                 for linee in lines:
                     linee = linee.split(',')
-                    listaO.append(int(linee[1]))
+                    listaOcc.append(int(linee[1]))
                 #print(line[1])
 
     with open("wordQuantity.csv") as quant:
@@ -65,20 +74,20 @@ def main():
                 lines = quant.readlines()
                 for linee in lines:
                     linee = linee.split(',')
-                    listaQ.append(int(linee[1]))
+                    listaQuan.append(int(linee[1]))
                 #print(line[1])
-    listaO = listaO[-30:]
+    listaO = listaOcc[-30:]
 
-    sum = 0
-    for i in range(len(listaQ)):
-        sum += listaQ[i]
-    print(sum)
+    suma = 0
+    for i in range(len(listaQuan)):
+        suma += listaQuan[i]
+    print(suma)
 
-    print(listaQ)
-    for i in range(len(listaQ)):
-        listaQ[i] = listaQ[i]/sum
+    print(listaQuan)
+    for i in range(len(listaQuan)):
+        listaQuan[i] = listaQuan[i]/sum
 
-    print(listaQ)
+    print(listaQuan)
 
 if __name__ == '__main__':
     main()
