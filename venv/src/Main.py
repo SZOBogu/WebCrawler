@@ -32,17 +32,17 @@ def main():
     linkFetcher = LinkFetcher.LinkFetcher()
     dataFileGen = DataFileGenerator.DataFileGenerator()
 
-    num_lines = sum(1 for line in open('linksFetched.csv'))
-    for i in range(num_lines):
-        artFetcher.get_article('linksFetched.csv', "Articles/article", i)
+    #num_lines = sum(1 for line in open('linksFetched.csv'))
+    for i in range(3):
+        #artFetcher.get_article('linksFetched.csv', "Articles/article", i)
+        #wez linki i wciep do seta, a z seta do pliku
+        sett_temp = linkFetcher.getLinks('linksDebug.csv', i)
+        # with open('linksFetched.csv', 'a') as file:
+        #     writer = csv.writer(file, delimiter=' ')
+        #     for link in sett_temp:
+        #         print(link)
+        #         writer.writerow([link])
 
-    #wez linki i wciep do seta, a z seta do pliku
-        sett_temp = linkFetcher.get_links(i)
-        with open('linksFetched.csv', 'a') as file:
-            writer = csv.writer(file, delimiter=' ')
-            for link in sett_temp:
-                print(link)
-                writer.writerow([link])
     #double check unikalnosci
     sett2 = set()
     with open('linksForStartup.csv') as file:
