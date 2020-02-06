@@ -3,9 +3,8 @@ import csv
 class ArticleAnalyzer:
     def generate_dictionary(self):
         wordList = set()
-        for i in range(10166):
+        for i in range(3):
             with open('Articles/article%i.txt' % i, 'r') as article:
-                rdr = csv.reader(article)
                 for line in article:
                     line = line.split(' ')
                     for word in line:

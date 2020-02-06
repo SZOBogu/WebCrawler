@@ -1,10 +1,21 @@
-import csv
+import os
+from pathlib import Path
 
 import ArticleAnalyzer
 import ArticleFetcher
 import DataFileGenerator
 import LinkFetcher
 
+def init_links():
+    linksFilePath = "linksFetched.csv"
+    if(os.path.exists(linksFilePath)):
+        path = Path(linksFilePath)
+        path.touch()
+    elif (os.stat(linksFilePath).st_size != 0):
+        with open(linksFilePath, 'a') as file:
+            file.write("/wiki/Ghana\n/wiki/Niewolnictwo\n\wiki/Australia_i_Oceania\n/wiki/Rwanda\n/wiki/Malediwy\n/wiki/Azerbejd%C5%BCan\n/wiki/Gliwice")
+    else:
+        pass
 def main():
     #TODO: kontrola wielkości plików
 
@@ -14,10 +25,12 @@ def main():
     dataFileGen = DataFileGenerator.DataFileGenerator()
     articleAnalyzer = ArticleAnalyzer.ArticleAnalyzer()
 
+    init_links()
+
     #num_lines = sum(1 for line in open('linksFetched.csv'))
-    num_lines = 3
-    for i in range(num_lines):
-        linkFetcher.getLinks('linksFetched.csv', i)
+    # num_lines = 3
+    # for i in range(num_lines):
+    #     linkFetcher.getLinks('linksFetched.csv', i)
 
     dataFileGen.generate_article_csvs()
     articleAnalyzer.generate_dictionary()
