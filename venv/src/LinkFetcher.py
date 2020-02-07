@@ -8,9 +8,6 @@ import os
 
 
 class LinkFetcher:
-    def __init__(self):
-        pass
-
     def linkCount(self, linksFilePath):
 
         linksFilePath = Path(linksFilePath)

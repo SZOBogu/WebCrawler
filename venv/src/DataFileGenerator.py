@@ -2,15 +2,12 @@ import operator
 import csv
 
 class DataFileGenerator:
-    def __init__(self):
-        pass
-
-    def generate_article_csvs(self):
+    def generate_article_csvs(self, articlePath, firstWordOccFilePath, wordCountFilePath):
         dicQuan = dict()
         dicOccur = dict()
         wordcount = 0
-        for i in range(10166):
-            with open('Articles/article%i.txt' % i, 'r') as article:
+        for i in range(3):
+            with open(articlePath + '%i.txt' % i, 'r') as article:
                 art = csv.reader(article)
                 for paragraph in art:
                     for line in paragraph:
@@ -26,34 +23,14 @@ class DataFileGenerator:
                                 dicOccur.update({word: wordcount})
             article.close()
 
-        with open('wordFirstOccurance.csv', 'a') as occur:
+        with open(firstWordOccFilePath, 'a') as occur:
             for key in dicOccur:
                 print(key)
-
                 occur.write(str(key) + ',' + str(dicOccur[key]) + ',\n')
 
-        with open('wordQuantity.csv', 'a') as quantity:
+        with open(wordCountFilePath, 'a') as quantity:
             dicQuan = sorted(dicQuan.items(), key= operator.itemgetter(1))
             print(dicQuan)
             for i in range(len(dicQuan)):
                 quantity.write(str(dicQuan[i][0]) + ',' + str(dicQuan[i][1]) + ',\n')
             quantity.close()
-
-    def generate_csv(self, i, word_count):
-        sett = set()
-        with open('Articles/article%i.txt' % i, 'r') as article:
-            reader = csv.reader(article)
-            with open('CSV%i.csv' % i, 'a') as file:
-                writer = csv.writer(file)
-                for list in reader:
-                    for word in list:
-                        sett.add(word)
-
-                #writer.writerow(word, first, count)
-
-    def megre_csvs(self):
-        """
-            TODO: sklej csvki
-            sprawdz czy dane slowo jest juz w poprzedniej csvce, jesli tak to dodaj count, jak nie to dodaj na koniec pliku, merguj do jednego pliku
-        :return:
-        """

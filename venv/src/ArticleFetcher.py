@@ -6,9 +6,6 @@ from bs4 import BeautifulSoup
 
 
 class ArticleFetcher:
-    def __init__(self):
-        pass
-
     def checkArticleFilesSize(self, path):
         total_size = 0
         for dirpath, dirnames, filenames in os.walk(path):
@@ -25,7 +22,7 @@ class ArticleFetcher:
                 url = file.read().split('\n')[i]
                 source = "https://pl.wikipedia.org/" + url
                 data = requests.get(source).text    #tekst htmla
-                soup = BeautifulSoup(data, 'lxml')  #tekst htmal z metodami bs4
+                soup = BeautifulSoup(data, 'lxml')  #tekst htmla z metodami bs4
                 writer = csv.writer(article)
                 for line in soup.find_all('p'):
                     line = line.get_text()

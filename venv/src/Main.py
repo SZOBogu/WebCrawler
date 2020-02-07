@@ -32,11 +32,17 @@ def main():
     # for i in range(num_lines):
     #     linkFetcher.getLinks('linksFetched.csv', i)
 
-    dataFileGen.generate_article_csvs()
-    articleAnalyzer.generate_dictionary()
+    linksFile = "linksFetched.csv"
+    articlesFiles = "Articles/article"
+    wordCountFilePath = "wordQuantity.csv"
+    firstWordOccFilePath = "wordFirstOccurrence.csv"
+    wordListFile = 'wordList.csv'
 
-    listaOcc = articleAnalyzer.generateFirstOccuranceOfWordCsv()
-    listaQuan = articleAnalyzer.generateWordCountCsv()
+    dataFileGen.generate_article_csvs(articlesFiles, firstWordOccFilePath, wordCountFilePath)
+    articleAnalyzer.generate_dictionary(articlesFiles, wordListFile)
+
+    listaOcc = articleAnalyzer.generateFirstOccurrenceOfWordCsv(firstWordOccFilePath)
+    listaQuan = articleAnalyzer.generateWordCountCsv(wordCountFilePath)
 
     suma = 0
     for i in range(len(listaQuan)):
