@@ -33,7 +33,7 @@ def main():
 
     num_lines = linkFetcher.linkCount(linksFile)
 
-    if(artFetcher.checkArticleFilesSize() > articlesSize):
+    while(artFetcher.checkArticleFilesSize() < articlesSize):
         if(num_lines > 10000):
             #num_lines = 3
             for i in range(num_lines):
