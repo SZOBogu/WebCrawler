@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 
 
 class ArticleFetcher:
-    def checkArticleFilesSize(self, path):
+    def checkArticleFilesSize(self, path="Articles/"):
         total_size = 0
         for dirpath, dirnames, filenames in os.walk(path):
             for f in filenames:

@@ -1,4 +1,3 @@
-import re
 import requests
 from bs4 import BeautifulSoup
 from Filter import Filter
@@ -9,7 +8,6 @@ import os
 
 class LinkFetcher:
     def linkCount(self, linksFilePath):
-
         linksFilePath = Path(linksFilePath)
         linksFilePath.touch(exist_ok=True)
 

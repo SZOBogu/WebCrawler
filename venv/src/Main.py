@@ -17,43 +17,49 @@ def init_links():
     else:
         pass
 def main():
-    #TODO: kontrola wielkości plików
-
-    #wez dane z artykulow
-    artFetcher = ArticleFetcher.ArticleFetcher()
-    linkFetcher = LinkFetcher.LinkFetcher()
-    dataFileGen = DataFileGenerator.DataFileGenerator()
-    articleAnalyzer = ArticleAnalyzer.ArticleAnalyzer()
-
-    init_links()
-
-    #num_lines = sum(1 for line in open('linksFetched.csv'))
-    # num_lines = 3
-    # for i in range(num_lines):
-    #     linkFetcher.getLinks('linksFetched.csv', i)
-
     linksFile = "linksFetched.csv"
     articlesFiles = "Articles/article"
     wordCountFilePath = "wordQuantity.csv"
     firstWordOccFilePath = "wordFirstOccurrence.csv"
     wordListFile = 'wordList.csv'
 
-    dataFileGen.generate_article_csvs(articlesFiles, firstWordOccFilePath, wordCountFilePath)
-    articleAnalyzer.generate_dictionary(articlesFiles, wordListFile)
+    artFetcher = ArticleFetcher.ArticleFetcher()
+    linkFetcher = LinkFetcher.LinkFetcher()
+    dataFileGen = DataFileGenerator.DataFileGenerator()
+    articleAnalyzer = ArticleAnalyzer.ArticleAnalyzer()
 
-    listaOcc = articleAnalyzer.generateFirstOccurrenceOfWordCsv(firstWordOccFilePath)
-    listaQuan = articleAnalyzer.generateWordCountCsv(wordCountFilePath)
+    init_links()
+    articlesSize = input("Enter your minimal article files size (in bytes): ")
 
-    suma = 0
-    for i in range(len(listaQuan)):
-        suma += listaQuan[i]
-    print(suma)
+    num_lines = linkFetcher.linkCount(linksFile)
 
-    print(listaQuan)
-    for i in range(len(listaQuan)):
-        listaQuan[i] = listaQuan[i]/sum
+    if(artFetcher.checkArticleFilesSize() > articlesSize):
+        if(num_lines > 10000):
+            #num_lines = 3
+            for i in range(num_lines):
+                linkFetcher.getLinks('linksFetched.csv', i)
 
-    print(listaQuan)
+            dataFileGen.generate_article_csvs(articlesFiles, firstWordOccFilePath, wordCountFilePath)
+            articleAnalyzer.generate_dictionary(articlesFiles, wordListFile)
+
+            listaOcc = articleAnalyzer.generateFirstOccurrenceOfWordCsv(firstWordOccFilePath)
+            listaQuan = articleAnalyzer.generateWordCountCsv(wordCountFilePath)
+
+            suma = 0
+            for i in range(len(listaQuan)):
+                suma += listaQuan[i]
+            print(suma)
+
+            print(listaQuan)
+            for i in range(len(listaQuan)):
+                listaQuan[i] = listaQuan[i]/sum
+
+            print(listaQuan)
+        else:
+            for i in range(num_lines, linkFetcher.linkCount(linksFile)):
+                linkFetcher.getLinks(linksFile, i)
+                num_lines = linkFetcher.linkCount(linksFile)
+
 
 if __name__ == '__main__':
     main()
