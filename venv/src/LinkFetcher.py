@@ -34,7 +34,6 @@ class LinkFetcher:
                 with open(linksFilePath, 'a') as file:
                     writer = csv.writer(file, delimiter=' ')
                     for link in sett:
-                        print(link)
                         writer.writerow([link])
                 return sett
         else:

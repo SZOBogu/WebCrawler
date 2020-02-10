@@ -51,5 +51,4 @@ class ArticleAnalyzer:
                     for line in lines:
                         line = line.split(',')
                         countList.append(int(line[1]))
-                    # print(line[1])
         return countList

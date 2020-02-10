@@ -25,12 +25,10 @@ class DataFileGenerator:
 
         with open(firstWordOccFilePath, 'a') as occur:
             for key in dicOccur:
-                print(key)
                 occur.write(str(key) + ',' + str(dicOccur[key]) + ',\n')
 
         with open(wordCountFilePath, 'a') as quantity:
             dicQuan = sorted(dicQuan.items(), key= operator.itemgetter(1))
-            print(dicQuan)
             for i in range(len(dicQuan)):
                 quantity.write(str(dicQuan[i][0]) + ',' + str(dicQuan[i][1]) + ',\n')
             quantity.close()

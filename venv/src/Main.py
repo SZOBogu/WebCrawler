@@ -48,13 +48,9 @@ def main():
             suma = 0
             for i in range(len(listaQuan)):
                 suma += listaQuan[i]
-            print(suma)
-
-            print(listaQuan)
+                
             for i in range(len(listaQuan)):
                 listaQuan[i] = listaQuan[i]/sum
-
-            print(listaQuan)
         else:
             for i in range(num_lines, linkFetcher.linkCount(linksFile)):
                 linkFetcher.getLinks(linksFile, i)
