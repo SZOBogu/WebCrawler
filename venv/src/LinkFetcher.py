@@ -24,7 +24,7 @@ class LinkFetcher:
         if(os.stat(linksFilePath).st_size != 0):
             with open(linksFilePath) as file:
                 url = file.read().split('\n')[i]
-                source = "https://pl.wikipedia.org" + url
+                source = "https://pl.wikipedia.org/" + url
                 data = requests.get(source).text
                 soup = BeautifulSoup(data, 'lxml')
 

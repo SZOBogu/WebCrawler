@@ -11,7 +11,7 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(14, self.fetcher.linkCount('testLink'))
 
     def test_getLinks(self):
-        sett = {"/wiki/Suomenlinna",
+        resultSet = {"/wiki/Suomenlinna",
                 "/wiki/Plac_Targowy_w_Helsinkach",
                 "/wiki/Komisja_Standaryzacji_Nazw_Geograficznych_poza_Granicami_Rzeczypospolitej_Polskiej",
                 "/wiki/Helsinki",
@@ -27,7 +27,7 @@ class MyTestCase(unittest.TestCase):
                 "/wiki/Ambasada",
                 "/wiki/Esplanadi",}
         links = self.fetcher.getLinks('testLink', 1)
-        self.assertEqual(sett, links)
+        self.assertEqual(resultSet, links)
 
 if __name__ == '__main__':
     unittest.main()
