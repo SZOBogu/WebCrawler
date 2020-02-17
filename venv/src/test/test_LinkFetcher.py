@@ -26,7 +26,8 @@ class MyTestCase(unittest.TestCase):
                 "/wiki/Plac_Targowy_w_Helsinkach",
                 "/wiki/Ambasada",
                 "/wiki/Esplanadi",}
-        self.assertEqual(sett, self.fetcher.getLinks('testLink', 1))
+        links = self.fetcher.getLinks('testLink', 1)
+        self.assertEqual(sett, links)
 
 if __name__ == '__main__':
     unittest.main()

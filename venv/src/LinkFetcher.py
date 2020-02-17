@@ -24,18 +24,18 @@ class LinkFetcher:
         if(os.stat(linksFilePath).st_size != 0):
             with open(linksFilePath) as file:
                 url = file.read().split('\n')[i]
-                source = "https://pl.wikipedia.org/" + url
+                source = "https://pl.wikipedia.org" + url
                 data = requests.get(source).text
                 soup = BeautifulSoup(data, 'lxml')
 
                 filter = Filter()
-                sett = filter.filter(soup.find_all('a'))
+                sett = filter.filter(soup.find_all('a'))        #nic nie zwraca
 
                 with open(linksFilePath, 'a') as file:
                     writer = csv.writer(file, delimiter=' ')
                     for link in sett:
                         writer.writerow([link])
-                return sett
+ #               return sett
         else:
             print('file empty')
         return sett
